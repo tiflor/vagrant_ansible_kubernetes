@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: true
+  # gather_facts: no
+
+  pre_tasks:
+    - import_tasks: pre_tasks.yml
+
+  vars:
+    swap_swappiness: 0
+    swap_file_state: present
+    docker_install_compose: false
+    docker_users: 
+      - vagrant
+
+  roles:
+    - geerlingguy.containerd
+    - geerlingguy.kubernetes
+
+
+  tasks:
+  - import_tasks: setup_kubeconfig.yml
